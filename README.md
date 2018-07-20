@@ -4,4 +4,5 @@ The randomization is pretty simple, the idea is to avoid close repetitions as mu
 
 To run locally:
 - clone this repo
+- `npm i`
 - `npm start`
