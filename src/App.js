@@ -44,8 +44,21 @@ class App extends Component {
         const randomizedPeople = shuffle(flattenedPeople);
         const peopleChunks = chunk(randomizedPeople, this.state.groupSize);
 
+        let requiredChunks = [];
+        let nOfDuplications = null;
+
+        if (this.state.nOfGroups * this.state.groupSize < flattenedPeople.length )
+        {
+            requiredChunks = peopleChunks.slice(0, this.state.nOfGroups);
+        }
+        else {
+            nOfDuplications = Math.floor((this.state.nOfGroups * this.state.groupSize) / flattenedPeople.length);
+        }
+
+        console.log('A', nOfDuplications);
+
         this.setState({
-            generatedGroups: peopleChunks,
+            generatedGroups: requiredChunks,
         })
     }
 
