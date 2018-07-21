@@ -16,6 +16,8 @@ class App extends Component {
                 [''],
             ],
         view: 'default',
+        groupSize: 4,
+        nOfGroups: 6,
         generatedGroups: {}
         }
     }
@@ -40,11 +42,30 @@ class App extends Component {
         const { people } = this.state;
         const flattenedPeople = compact(flatten(people));
         const randomizedPeople = shuffle(flattenedPeople);
-        const peopleChunks = chunk(randomizedPeople, 4);
+        const peopleChunks = chunk(randomizedPeople, this.state.groupSize);
 
         this.setState({
             generatedGroups: peopleChunks,
         })
+    }
+
+    onChangeHandler = (e) =>
+    {
+        switch(e.target.name)
+        {
+            case 'groupSize':
+                this.setState({
+                    groupSize: e.target.value,
+                })
+                break;
+            case 'nOfGroups':
+                this.setState({
+                    nOfGroups: e.target.value,
+                })
+                break;
+            default:
+                // do nothing
+        }
     }
 
     render() {
@@ -57,30 +78,10 @@ class App extends Component {
                 { this.state.view === 'default' &&
                 <Fragment>
                     <label>Group Size</label>
-                    <select defaultValue='4' >
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                        <option>6</option>
-                        <option>7</option>
-                        <option>8</option>
-                    </select>
+                    <input type='number' onChange={(e)=>this.onChangeHandler(e)} name='groupSize' value={ this.state.groupSize } />
 
                     <label>N. of weeks to generate</label>
-                    <select defaultValue='6'>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                        <option>6</option>
-                        <option>7</option>
-                        <option>8</option>
-                        <option>9</option>
-                        <option>10</option>
-                        <option>11</option>
-                        <option>12</option>
-                    </select>
+                    <input type='number' onChange={(e)=>this.onChangeHandler(e)} name='nOfGroups' value={ this.state.nOfGroups } />
 
                     <button onClick={(e)=>this.generate(e)} >Generate!</button>
 
