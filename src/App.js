@@ -39,23 +39,34 @@ class App extends Component {
 
     generate = (e) =>
     {
+        let peopleChunks = {};
+
         const { people } = this.state;
         const flattenedPeople = compact(flatten(people));
-        const randomizedPeople = shuffle(flattenedPeople);
-        const peopleChunks = chunk(randomizedPeople, this.state.groupSize);
-
-        let requiredChunks = [];
-        let nOfDuplications = null;
 
         if (this.state.nOfGroups * this.state.groupSize < flattenedPeople.length )
         {
-            requiredChunks = peopleChunks.slice(0, this.state.nOfGroups);
+            const randomizedPeople = shuffle(flattenedPeople);
+            peopleChunks = chunk(randomizedPeople, this.state.groupSize);
         }
         else {
-            nOfDuplications = Math.floor((this.state.nOfGroups * this.state.groupSize) / flattenedPeople.length);
+            const nOfIterations = Math.floor((this.state.nOfGroups * this.state.groupSize) / flattenedPeople.length) + 1;
+            const safeBlockSize = Math.floor(flattenedPeople.length / this.state.groupSize);
+
+            let i = 0;
+            let tempArr = [];
+            while (i < nOfIterations) {
+                const tempRandomizedPeople = shuffle(flattenedPeople);
+                const tempPeopleChunks = chunk(tempRandomizedPeople, this.state.groupSize);
+                const usableTempPeopleChunks = tempPeopleChunks.slice(0, safeBlockSize);
+
+                tempArr.push(usableTempPeopleChunks);
+                i++;
+            }
+            peopleChunks = flatten(tempArr);
         }
 
-        console.log('A', nOfDuplications);
+        const requiredChunks = peopleChunks.slice(0, this.state.nOfGroups);
 
         this.setState({
             generatedGroups: requiredChunks,
@@ -101,11 +112,11 @@ class App extends Component {
 
                     { this.state.generatedGroups.length > 0 &&
                         <Fragment>
-                            {this.state.generatedGroups.map(group => (
-                                <div key={ group }>
+                            {this.state.generatedGroups.map((group, index) => (
+                                <div key={ index }>
                                     <ul>
-                                        {group.map(name => (
-                                            <li key={ name }>{ name }</li>
+                                        {group.map((name, nameIndex) => (
+                                            <li key={ nameIndex }>{ name }</li>
                                         ))}
                                     </ul>
                                 </div>
@@ -129,7 +140,7 @@ class App extends Component {
                         </div>
 
                         <button onClick={(e)=>this.savePeople(e)}>
-                            Save people list
+                            Update people list
                         </button>
                     </Fragment>
                 }
