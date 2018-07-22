@@ -160,3 +160,8 @@ img.mysteryLogo {
 .footer a {
   color: #000;
 }
+
+span.quote {
+  font-style: italic;
+  color: #666;
+}

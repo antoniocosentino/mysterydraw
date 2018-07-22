@@ -158,7 +158,7 @@ class App extends Component {
                     { this.state.view === 'default' &&
                     <Fragment>
                         <img alt='Mystery Machine' className='mysteryLogo' src={ mysteryLogo } />
-
+                        <span className='quote'>"a random mixing team members thingy"</span>
                         <div className='formBlocks'>
                             <div className='formBlock'>
                                 <label>Group Size</label>
