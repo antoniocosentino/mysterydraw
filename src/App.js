@@ -94,6 +94,14 @@ class App extends Component {
         }
     }
 
+    getAmountOfPeople = () =>
+    {
+        const { people } = this.state;
+        const flattenedPeople = compact(flatten(people));
+
+        return flattenedPeople.length;
+    }
+
     render() {
         return (
             <div className='App'>
@@ -102,6 +110,7 @@ class App extends Component {
                         <StylaLogo color="#efefef" />
                     </div>
                     <div className='topActions'>
+                    <span className='nOfPeople'>{ this.getAmountOfPeople() } people uploaded</span>
                     { this.state.view === 'default' &&
                         <a className='topRightLink' onClick={(e)=>this.goToPeopleView(e)}>Edit people list</a>
                     }
@@ -162,6 +171,7 @@ class App extends Component {
                                     ref='mysterytable'
                                 />
                             </div>
+                            <a className='tableButton' onClick={(e)=>this.savePeople(e)}>Update people list</a>
                         </Fragment>
                     }
                 </div>
