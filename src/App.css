@@ -5,6 +5,7 @@
 
 a.regularLink {
   text-decoration: underline;
+  cursor: pointer;
 }
 
 .topbar {
@@ -146,4 +147,14 @@ img.mysteryLogo {
   margin: 20px 0;
   font-size: 14px;
   color: #666;
+}
+
+.footer {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  font-size: 12px;
+}
+
+.footer a {
+  color: #000;
 }

@@ -8,7 +8,15 @@ import compact from 'lodash/compact';
 import shuffle from 'lodash/shuffle';
 import chunk from 'lodash/chunk';
 import mysteryLogo from './mystery.png'
+import 'font-awesome/css/font-awesome.min.css';
 
+class ViewGitHub extends React.Component {
+    render() {
+        return (
+            <a className="viewGit" href="https://github.com/antoniocosentino/mysterymachine"><i className="fa fa-github"></i> View on Github</a>
+        );
+    }
+}
 class App extends Component {
     constructor(props) {
         super(props);
@@ -136,7 +144,7 @@ class App extends Component {
                         <StylaLogo color="#efefef" />
                     </div>
                     <div className='topActions'>
-                    <span className='nOfPeople'>{ this.getAmountOfPeople() } people uploaded</span>
+                    <span className='nOfPeople'>{ this.getAmountOfPeople() } people in the list</span>
                     { this.state.view === 'default' &&
                         <a className='topRightLink' onClick={(e)=>this.goToPeopleView(e)}>Edit people list</a>
                     }
@@ -168,7 +176,10 @@ class App extends Component {
 
                             <div className='messages'>
                                 { error === 'zeropeople' &&
-                                <span>The list of people is empty. Please <a className='regularLink' onClick={(e)=>this.goToPeopleView(e)}>upload some people names</a> first.</span>
+                                <Fragment>
+                                    <span aria-label='Sorry' role='img'>🤷‍♂️ </span>
+                                    <span>The list of people is empty. Please <a className='regularLink' onClick={(e)=>this.goToPeopleView(e)}>insert some people names</a> first.</span>
+                                </Fragment>
                                 }
                                 { error === 'notenoughpeople' &&
                                 <span>Group size is bigger than the available number of people.</span>
@@ -211,7 +222,9 @@ class App extends Component {
                         </Fragment>
                     }
                 </div>
-
+                <div className='footer'>
+                    Antonio Cosentino &copy; 2018 - <ViewGitHub />
+                </div>
             </div>
         );
     }

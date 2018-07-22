@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@handsontable/react": "^1.0.0",
+    "font-awesome": "^4.7.0",
     "handsontable": "^5.0.0",
     "lodash": "^4.17.10",
     "react": "^16.4.1",
