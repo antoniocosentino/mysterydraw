@@ -102,27 +102,42 @@ class App extends Component {
                         <StylaLogo color="#efefef" />
                     </div>
                     <div className='topActions'>
-                        <a className='editPeople' onClick={(e)=>this.goToPeopleView(e)}>Edit people list</a>
+                    { this.state.view === 'default' &&
+                        <a className='topRightLink' onClick={(e)=>this.goToPeopleView(e)}>Edit people list</a>
+                    }
+                    { this.state.view === 'list' &&
+                        <a className='topRightLink' onClick={(e)=>this.savePeople(e)}>Back to generator</a>
+                    }
                     </div>
                 </div>
 
                 <div className='container'>
-                    <img alt='Mystery Machine' className='mysteryLogo' src={ mysteryLogo } />
                     { this.state.view === 'default' &&
                     <Fragment>
-                        <label>Group Size</label>
-                        <input type='number' onChange={(e)=>this.onChangeHandler(e)} name='groupSize' value={ this.state.groupSize } />
+                        <img alt='Mystery Machine' className='mysteryLogo' src={ mysteryLogo } />
 
-                        <label>N. of weeks to generate</label>
-                        <input type='number' onChange={(e)=>this.onChangeHandler(e)} name='nOfGroups' value={ this.state.nOfGroups } />
+                        <div className='formBlocks'>
+                            <div className='formBlock'>
+                                <label>Group Size</label>
+                                <input type='number' onChange={(e)=>this.onChangeHandler(e)} name='groupSize' value={ this.state.groupSize } />
+                            </div>
 
-                        <button onClick={(e)=>this.generate(e)} >Generate!</button>
+                            <div className='formBlock'>
+                                <label>N. of groups to generate</label>
+                                <input type='number' onChange={(e)=>this.onChangeHandler(e)} name='nOfGroups' value={ this.state.nOfGroups } />
+                            </div>
+
+                            <div className='formBlock'>
+                                <button onClick={(e)=>this.generate(e)} >Generate!</button>
+                            </div>
+                        </div>
 
 
                         { this.state.generatedGroups.length > 0 &&
-                            <Fragment>
+                            <div className='groupsContainer'>
                                 {this.state.generatedGroups.map((group, index) => (
-                                    <div key={ index }>
+                                    <div className='singleGroup' key={ index }>
+                                        <span className='groupTitle'>Group { index + 1 }</span>
                                         <ul>
                                             {group.map((name, nameIndex) => (
                                                 <li key={ nameIndex }>{ name }</li>
@@ -130,7 +145,7 @@ class App extends Component {
                                         </ul>
                                     </div>
                                 ))}
-                            </Fragment>
+                            </div>
                         }
 
                     </Fragment>
@@ -147,10 +162,6 @@ class App extends Component {
                                     ref='mysterytable'
                                 />
                             </div>
-
-                            <button onClick={(e)=>this.savePeople(e)}>
-                                Update people list
-                            </button>
                         </Fragment>
                     }
                 </div>
