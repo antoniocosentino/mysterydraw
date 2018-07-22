@@ -42,6 +42,8 @@ a.topRightLink:hover {
 img.mysteryLogo {
   display: block;
   margin: 20px auto;
+  width: 90%;
+  max-width: 500px;
 }
 
 .container {
