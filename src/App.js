@@ -28,7 +28,8 @@ class App extends Component {
     {
         this.setState({
             people : this.refs.mysterytable.hotInstance.getData(),
-            view: 'default'
+            view: 'default',
+            generatedGroups: {}
         })
     }
 
@@ -45,6 +46,14 @@ class App extends Component {
 
         const { people } = this.state;
         const flattenedPeople = compact(flatten(people));
+
+        if (flattenedPeople.length === 0){
+            return;
+        }
+
+        if (flattenedPeople.length < this.state.groupSize){
+            return;
+        }
 
         if (this.state.nOfGroups * this.state.groupSize < flattenedPeople.length )
         {
@@ -103,6 +112,23 @@ class App extends Component {
     }
 
     render() {
+        let generateEnabled = true;
+        let generateClassNames = null;
+        let error = null;
+
+        if (this.getAmountOfPeople() === 0){
+            generateEnabled = false;
+            error = 'zeropeople';
+        }
+        else if (this.getAmountOfPeople() < this.state.groupSize){
+            generateEnabled = false;
+            error = 'notenoughpeople';
+        }
+
+        if (!generateEnabled){
+            generateClassNames = 'disabled';
+        }
+
         return (
             <div className='App'>
                 <div className='topbar'>
@@ -137,8 +163,18 @@ class App extends Component {
                             </div>
 
                             <div className='formBlock'>
-                                <button onClick={(e)=>this.generate(e)} >Generate!</button>
+                                <button className={ generateClassNames } onClick={(e)=>this.generate(e)} >Generate!</button>
                             </div>
+
+                            <div className='messages'>
+                                { error === 'zeropeople' &&
+                                <span>The list of people is empty. Please <a className='regularLink' onClick={(e)=>this.goToPeopleView(e)}>upload some people names</a> first.</span>
+                                }
+                                { error === 'notenoughpeople' &&
+                                <span>Group size is bigger than the available number of people.</span>
+                                }
+                            </div>
+
                         </div>
 
 

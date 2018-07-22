@@ -3,6 +3,10 @@
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+a.regularLink {
+  text-decoration: underline;
+}
+
 .topbar {
   background-color: #000000;
   padding: 20px;
@@ -79,6 +83,11 @@ img.mysteryLogo {
   outline: none;
 }
 
+.formBlock button.disabled {
+  cursor: not-allowed;
+  opacity: 0.3;
+}
+
 .tableContainer {
   width: 50%;
   margin: 30px auto;
@@ -131,4 +140,10 @@ img.mysteryLogo {
   border-radius: 18px;
   cursor: pointer;
   outline: none;
+}
+
+.messages {
+  margin: 20px 0;
+  font-size: 14px;
+  color: #666;
 }
